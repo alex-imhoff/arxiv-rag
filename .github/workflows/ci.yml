@@ -59,10 +59,14 @@ jobs:
           gcloud --version
           gcloud auth list
           gcloud config list
-      - name: Deploy to Cloud Run
+      - name: Deploy to Cloud Run (debug)
         run: |
+          set -x
+          gcloud config set project alex-arxiv-rag-2025
+          gcloud config set run/region us-central1
           gcloud run deploy arxiv-rag \
-            --image=docker.io/aleximhoff23/arxiv-rag:cr1 \
-            --region=us-central1 \
+            --image=docker.io/aleximhoff23/arxiv-rag:latest \
             --platform=managed \
-            --quiet
+            --quiet \
+            --verbosity=debug
+
